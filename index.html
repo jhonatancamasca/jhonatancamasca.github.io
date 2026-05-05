@@ -1,572 +1,493 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Resume Free Template by Colorlib</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="css/animate.css">
-	<link rel="stylesheet" href="css/flexslider.css">
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jhonatan Camasca — Machine Learning Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0c0e; --bg2: #111316; --bg3: #16181d;
+      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+      --text: #e8e6e0; --muted: #6b6e77;
+      --accent: #c8f050; --accent2: #4af0b0; --accent3: #f0a050;
+      --font-display: 'Syne', sans-serif; --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-mono); font-size: 14px; line-height: 1.7; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.4; }
 
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/style.css">
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; border-bottom: 1px solid var(--border); background: rgba(11,12,14,0.88); backdrop-filter: blur(14px); }
+    .nav-logo { font-family: var(--font-display); font-size: 15px; font-weight: 700; letter-spacing: 0.05em; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.75rem; }
+    .nav-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
 
-	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700" rel="stylesheet">
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 8rem 3rem 4rem; position: relative; border-bottom: 1px solid var(--border); }
+    .hero-tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s; }
+    .hero-name { font-family: var(--font-display); font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; color: var(--text); opacity: 0; animation: fadeUp 0.7s ease forwards 0.35s; }
+    .hero-name span { color: var(--accent); }
+    .hero-desc { max-width: 560px; margin-top: 2rem; font-size: 14px; color: var(--muted); line-height: 1.85; opacity: 0; animation: fadeUp 0.7s ease forwards 0.5s; }
+    .hero-cta { display: flex; gap: 1rem; margin-top: 2.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.65s; }
+    .btn { display: inline-block; padding: 0.6rem 1.4rem; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: #0b0c0e; font-weight: 500; }
+    .btn-primary:hover { background: #d8ff60; transform: translateY(-1px); }
+    .btn-ghost { border: 1px solid var(--border2); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-stats { position: absolute; right: 3rem; bottom: 4rem; display: flex; flex-direction: column; gap: 1.5rem; opacity: 0; animation: fadeLeft 0.7s ease forwards 0.8s; }
+    .stat { text-align: right; }
+    .stat-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--text); line-height: 1; }
+    .stat-num span { color: var(--accent); }
+    .stat-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 
+    section { padding: 5rem 3rem; border-bottom: 1px solid var(--border); }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
+    .section-num { font-size: 11px; color: var(--accent); letter-spacing: 0.1em; }
+    .section-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--text); }
 
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p { color: var(--muted); line-height: 1.9; margin-bottom: 1rem; font-size: 14px; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .skills-group { margin-bottom: 1.5rem; }
+    .skills-group-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.6rem; display: block; }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag { font-size: 11px; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid var(--border2); border-radius: 2px; color: var(--muted); transition: all 0.2s; }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    .exp-list { display: flex; flex-direction: column; gap: 2px; }
+    .exp-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: border-color 0.2s; }
+    .exp-item:hover { border-color: var(--border2); }
+    .exp-header { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 1rem; padding: 1.25rem 1.5rem; cursor: pointer; }
+    .exp-company { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+    .exp-role { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .exp-period { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .exp-toggle { font-size: 18px; color: var(--muted); line-height: 1; transition: transform 0.3s; user-select: none; padding-top: 2px; }
+    .exp-item.open .exp-toggle { transform: rotate(45deg); color: var(--accent); }
+    .exp-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; padding: 0 1.5rem; }
+    .exp-item.open .exp-body { max-height: 1400px; padding: 0 1.5rem 1.5rem; }
+    .exp-project { margin-bottom: 1.25rem; padding-left: 1rem; border-left: 2px solid var(--border2); }
+    .exp-project-name { font-size: 12px; font-weight: 500; color: var(--accent2); letter-spacing: 0.04em; margin-bottom: 6px; }
+    .exp-bullets { list-style: none; padding: 0; }
+    .exp-bullets li { font-size: 13px; color: var(--muted); padding: 3px 0 3px 1rem; position: relative; line-height: 1.65; }
+    .exp-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--border2); }
+
+    .teaching-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+    .teaching-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1.5rem; transition: border-color 0.2s; }
+    .teaching-card:hover { border-color: var(--border2); }
+    .teaching-org { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent3); margin-bottom: 6px; }
+    .teaching-role { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .teaching-period { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+    .teaching-courses { display: flex; flex-wrap: wrap; gap: 6px; }
+    .course-tag { font-size: 10px; padding: 2px 8px; border-radius: 2px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); }
+
+    .awards-list { display: flex; flex-direction: column; }
+    .award-row { display: grid; grid-template-columns: 5rem 1fr auto; align-items: center; gap: 1.5rem; padding: 1.25rem 0.5rem; border-bottom: 1px solid var(--border); transition: background 0.2s, padding-left 0.2s; border-radius: 4px; }
+    .award-row:first-child { border-top: 1px solid var(--border); }
+    .award-row:hover { background: var(--bg2); padding-left: 1rem; }
+    .award-place { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: var(--accent); }
+    .award-name { font-size: 14px; color: var(--text); font-weight: 500; }
+    .award-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .award-badge { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .badge-gold { background: rgba(200,240,80,0.1); color: var(--accent); border: 1px solid rgba(200,240,80,0.25); }
+    .badge-silver { background: rgba(74,240,176,0.08); color: var(--accent2); border: 1px solid rgba(74,240,176,0.2); }
+    .badge-bronze { background: rgba(240,160,80,0.08); color: var(--accent3); border: 1px solid rgba(240,160,80,0.2); }
+    .badge-special { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border2); }
+
+    .pub-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .pub-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; transition: border-color 0.2s; }
+    .pub-card:hover { border-color: var(--border2); }
+    .pub-tag { display: inline-block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); border: 1px solid rgba(74,240,176,0.25); padding: 2px 8px; border-radius: 2px; margin-bottom: 0.75rem; }
+    .pub-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 0.5rem; }
+    .pub-venue { font-size: 12px; color: var(--muted); margin-bottom: 1rem; }
+    .pub-link { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+    .pub-link:hover { text-decoration: underline; }
+
+    .edu-timeline { position: relative; padding-left: 1.5rem; }
+    .edu-timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .edu-item { position: relative; padding: 0 0 2.5rem 2rem; }
+    .edu-item::before { content: ''; position: absolute; left: -4px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(200,240,80,0.4); }
+    .edu-degree { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .edu-inst { font-size: 13px; color: var(--muted); }
+    .edu-period { font-size: 11px; color: rgba(107,110,119,0.7); margin-top: 2px; }
+
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .contact-heading { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; line-height: 1.1; color: var(--text); }
+    .contact-heading span { color: var(--accent); }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s; }
+    .contact-item:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-icon { font-size: 15px; min-width: 24px; text-align: center; }
+    .contact-label { font-size: 11px; color: var(--muted); display: block; letter-spacing: 0.06em; }
+    .contact-value { font-size: 14px; color: var(--text); }
+
+    footer { padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 12px; color: var(--muted); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeLeft { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 0.75rem; }
+      .nav-links a { font-size: 10px; }
+      #hero { padding: 7rem 1.5rem 8rem; }
+      .hero-stats { position: static; margin-top: 2.5rem; flex-direction: row; gap: 2rem; opacity: 1; animation: none; }
+      .stat { text-align: left; }
+      section { padding: 3.5rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .award-row { grid-template-columns: 4rem 1fr; }
+      .award-badge { display: none; }
+      .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
 </head>
-<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
-
-
-
-	<nav class="navbar navbar-expand-lg site-navbar navbar-light bg-light" id="pb-navbar">
-
-		<div class="container">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			
-
-			<div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample09">
-				<ul class="navbar-nav">
-					<!--<li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>-->
-					<li class="nav-item"><a class="nav-link" href="#section-portfolio">Projects</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-resume">Resume</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-about">Intro</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-contact">Contact</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-blog">Blog</a></li>
-					<li class="nav-item"><a class="nav-link" href="#section-services">Research Work</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-
-
-
-	<section class="site-hero" style="background-image: url(images/image_1.jpg);" id="section-home" data-stellar-background-ratio="0.5">
-		<div class="container">
-			<div class="row intro-text align-items-center justify-content-center">
-				<div class="col-md-10 text-center pt-5">
-
-					<h1 class="site-heading site-animate">Hello, I'm <strong class="d-block">Jhonatan Camasca</strong></h1>
-					<strong class="d-block text-white text-uppercase letter-spacing">and this is My Resume</strong>
-
-				</div>
-			</div>
-		</div>
-	</section> <!-- section -->
-
-
-
-
-
-
-	<section class="site-section" id="section-portfolio">
-		<div class="container">
-			<div class="row">
-				<div class="section-heading text-center col-md-12">
-					<h2>Featured <strong>Portfolio</strong></h2>
-				</div>
-			</div>
-			<div class="filters">
-				<ul>
-					<li class="active" data-filter="*">All</li>
-					<li data-filter=".packaging">Natural Language Processing</li>
-					<li data-filter=".mockup">Computer Vision</li>
-					<li data-filter=".typography">Artificial Intelligence</li>
-					<li data-filter=".photography">Data Science</li>
-				</ul>
-			</div>
-			
-			<div class="filters-content">
-				<div class="row grid">
-					<!-- section that belongs to Computer vision -->
-					<div class="single-portfolio col-sm-4 all mockup">
-	
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<img class="image img-fluid" src="images/alpr.jpg" alt="">
-							</div>
-							<a href="images/alpr.jpg" class="img-pop-up">  
-								<div class="middle">
-									<div class="text align-self-center d-flex"><img src="images/preview.png" alt=""></div>
-								</div>
-							</a>                                  
-						</div>
-						<div class="p-inner">
-							<h4>Automatic License Plate Recognition based in Yolov3</h4>
-							<div class="cat">Project</div>
-						</div>                                         
-					</div>
-
-
-					<!-- section that belongs to Computer vision -->
-					<div class="single-portfolio col-sm-4 all mockup">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<img class="image img-fluid" src="images/sentiment.png" alt="">
-							</div>
-							<a href="images/sentiment.png" class="img-pop-up">  
-								<div class="middle">
-									<div class="text align-self-center d-flex"><img src="images/preview.png" alt=""></div>
-								</div>
-							</a>                                  
-						</div>
-						<div class="p-inner">
-							<h4>Computer Aided System for pathology detection</h4>
-							<div class="cat">Project</div>
-						</div>                                         
-					</div>  
-					
-					<!-- section that belongs to Natural Language Processing-->
-					<div class="single-portfolio col-sm-4 all packaging">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<img class="image img-fluid" src="images/p3.jpg" alt="">
-							</div>
-							<a href="images/p3.jpg" class="img-pop-up">  
-								<div class="middle">
-									<div class="text align-self-center d-flex"><img src="images/preview.png" alt=""></div>
-								</div>
-							</a> 
-
-						</div>
-						<div class="p-inner">
-							<h4>Sentiment Analysis</h4>
-							<div class="cat">Project</div>
-						</div>
-					</div>
-					<!-- section that belongs to Natural Language Processing-->
-					<div class="single-portfolio col-sm-4 all packaging">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<img class="image img-fluid" src="images/p4.jpg" alt="">
-							</div>
-							<a href="images/p4.jpg" class="img-pop-up">  
-								<div class="middle">
-									<div class="text align-self-center d-flex"><img src="images/preview.png" alt=""></div>
-								</div>
-							</a>                                
-						</div> 
-						<div class="p-inner">
-							<h4>Topic Modeling</h4>
-							<div class="cat">Project</div>
-						</div>
-					</div>
-					<!-- 
-					<div class="single-portfolio col-sm-4 all typography">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<img class="image img-fluid" src="images/p5.jpg" alt="">
-							</div>
-							<a href="images/p5.jpg" class="img-pop-up">  
-								<div class="middle">
-									<div class="text align-self-center d-flex"><img src="images/preview.png" alt=""></div>
-								</div>
-							</a>                                
-						</div>
-						<div class="p-inner">
-							<h4>Isometric 3D Extrusion</h4>
-							<div class="cat">Typography</div>
-						</div>
-					</div>
-					<div class="single-portfolio col-sm-4 all photography">
-						<div class="relative">
-							<div class="thumb">
-								<div class="overlay overlay-bg"></div>
-								<img class="image img-fluid" src="images/p6.jpg" alt="">
-							</div>
-							<a href="images/p6.jpg" class="img-pop-up">  
-								<div class="middle">
-									<div class="text align-self-center d-flex"><img src="images/preview.png" alt=""></div>
-								</div>
-							</a>                                
-						</div>
-						<div class="p-inner">
-							<h4>White Space Photography</h4>
-							<div class="cat">photography</div>
-						</div>
-					</div>
-					-->
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- .section -->
-
-	
-	<section class="site-section " id="section-resume">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 mb-5">
-					<div class="section-heading text-center">
-						<h2>My <strong>Resume</strong></h2>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<h2 class="mb-5">Education</h2>
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2015 - 2020</span>
-						<h3>Bachelor in Information Technology and Systems Engineering </h3>
-						<p>Machine Learning, Statistics, Artificial Intelligence, Business Intel-ligence, Deep Learning and Computer Vision.</p>
-						<span class="school">Esan University</span>
-					</div>
-
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> 2019 </span>
-						<h3>Exchange Student</h3>
-						<p>Project Management and Technology Management.</p>
-						<span class="school">Monterrey University </span>
-					</div>
-
-					
-
-				</div>
-				<div class="col-md-6">
-
-
-					<h2 class="mb-5">Experience</h2>
-
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
-						<h3>Systems Engineering Internship</h3>
-						<p>gigtigt</p>
-						<span class="school">Graña y Montero</span>
-					</div>
-					<!-- 
-					<div class="resume-item mb-4">
-						<span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
-						<h3>Lead Product Designer</h3>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-						<span class="school">Facebook</span>
-					</div>
-					-->
-
-				
-
-
-				</div>
-			</div>
-		</div>
-	</section> <!-- .section -->
-
-	<section class="site-section" id="section-about">
-		<div class="container">
-			<div class="row mb-5 align-items-center">
-				<div class="col-lg-7 pr-lg-5 mb-5 mb-lg-0">
-					<img src="images/image_1.jpg" alt="Image placeholder" class="img-fluid">
-				</div>
-				<div class="col-lg-5 pl-lg-5">
-					<div class="section-heading">
-						<h2>About <strong>Me</strong></h2>
-					</div>
-					<p class="lead">Self-driven and knowledgeable systems engineering student</p>
-					<p class="mb-5  ">Passionate about machine learning, deep learning and computer vision.</p>
-
-					<p>
-						<a href="#section-contact" class="btn btn-primary px-4 py-2 btn-sm smoothscroll">Hire Me</a>
-						<a href="https://drive.google.com/file/d/1mXySAx6q1w0eblOAr229igsVQyYDtcHx/view?usp=sharing";export="download" class="btn btn-secondary px-4 py-2 btn-sm">Download CV</a>
-					</p>
-
-					
-
-				</div>
-			</div>
-
-
-		</div>
-	</section>
-	<!--
-	<section class="site-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-12">
-					<div class="section-heading text-center">
-						<h2>Client <strong>Testimonial</strong></h2>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-
-					<div class="block-47 d-flex mb-5">
-						<div class="block-47-image">
-							<img src="images/person_1.jpg" alt="Image placeholder" class="img-fluid">
-						</div>
-						<blockquote class="block-47-quote">
-							<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							<cite class="block-47-quote-author">&mdash; Ethan McCown, CEO <a href="#">XYZ Inc.</a></cite>
-						</blockquote>
-					</div>
-
-				</div>
-				<div class="col-md-6">
-
-					<div class="block-47 d-flex mb-5">
-						<div class="block-47-image">
-							<img src="images/person_2.jpg" alt="Image placeholder" class="img-fluid">
-						</div>
-						<blockquote class="block-47-quote">
-							<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							<cite class="block-47-quote-author">&mdash; Craig Gowen, CEO <a href="#">XYZ Inc.</a></cite>
-						</blockquote>
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-
-					<div class="block-47 d-flex mb-5">
-						<div class="block-47-image">
-							<img src="images/person_3.jpg" alt="Image placeholder" class="img-fluid">
-						</div>
-						<blockquote class="block-47-quote">
-							<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							<cite class="block-47-quote-author">&mdash; Ethan McCown, CEO <a href="#">XYZ Inc.</a></cite>
-						</blockquote>
-					</div>
-
-				</div>
-				<div class="col-md-6">
-
-					<div class="block-47 d-flex mb-5">
-						<div class="block-47-image">
-							<img src="images/person_4.jpg" alt="Image placeholder" class="img-fluid">
-						</div>
-						<blockquote class="block-47-quote">
-							<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							<cite class="block-47-quote-author">&mdash; Craig Gowen, CEO <a href="#">XYZ Inc.</a></cite>
-						</blockquote>
-					</div>
-
-				</div>
-
-			</div>
-		</div>
-	</section>
-	-->
-
-	<section class="site-section pb-0"  id="section-services">
-		<div class="container">
-
-			<div class="row mb-4">
-				<div class="col-md-12">
-					<div class="section-heading text-center">
-						<h2>My <strong>Research works</strong></h2>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-
-				<div class="col-md-6 col-lg-4 text-center mb-5">
-					<div class="site-service-item site-animate" data-animate-effect="fadeIn">
-						<span class="icon">
-							<span class="icon-browser2"></span>
-						</span>
-						<h3 class="mb-4">Web Design</h3>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-						<p><a href="#" class="site-link">Learn More <i class="icon-chevron-right"></i></a></p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-4 text-center mb-5">
-					<div class="site-service-item site-animate" data-animate-effect="fadeIn">
-						<span class="icon">
-							<span class="icon-presentation"></span>
-						</span>
-						<h3 class="mb-4">Search Engine Optimization</h3>
-						<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-						<p><a href="#" class="site-link">Learn More <i class="icon-chevron-right"></i></a></p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-4 text-center mb-5">
-					<div class="site-service-item site-animate" data-animate-effect="fadeIn">
-						<span class="icon">
-							<span class="icon-video2"></span>
-						</span>
-						<h3 class="mb-4">Video Editing</h3>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-						<p><a href="#" class="site-link">Learn More <i class="icon-chevron-right"></i></a></p>
-					</div>
-				</div>
-
-				
-
-			</div>
-		</div>
-	</section>
-
-
-	
-
-	<section class="site-section" id="section-blog">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 mb-5">
-					<div class="section-heading text-center">
-						<h2>Blog on <strong>Medium</strong></h2>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6 col-lg-4 mb-4">
-					<div class="blog-entry">
-						<a href="#"><img src="images/post_1.jpg" alt="Image placeholder" class="img-fluid"></a>
-						<div class="blog-entry-text">
-							<h3><a href="#">Creative Product Designer From Facebook</a></h3>
-							<p class="mb-4">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-
-							<div class="meta">
-								<a href="#"><span class="icon-calendar"></span> Aug 7, 2018</a>
-								<a href="#"><span class="icon-bubble"></span> 5 Comments</a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 mb-4">
-					<div class="blog-entry">
-						<a href="#"><img src="images/post_2.jpg" alt="Image placeholder" class="img-fluid"></a>
-						<div class="blog-entry-text">
-							<h3><a href="#">Creative Product Designer From Facebook</a></h3>
-							<p class="mb-4">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-
-							<div class="meta">
-								<a href="#"><span class="icon-calendar"></span> Aug 7, 2018</a>
-								<a href="#"><span class="icon-bubble"></span> 5 Comments</a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-lg-4 mb-4">
-					<div class="blog-entry">
-						<a href="#"><img src="images/post_3.jpg" alt="Image placeholder" class="img-fluid"></a>
-						<div class="blog-entry-text">
-							<h3><a href="#">Creative Product Designer From Facebook</a></h3>
-							<p class="mb-4">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-
-							<div class="meta">
-								<a href="#"><span class="icon-calendar"></span> Aug 7, 2018</a>
-								<a href="#"><span class="icon-bubble"></span> 5 Comments</a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</section>
-
-	<section class="site-section" id="section-contact">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 mb-5">
-					<div class="section-heading text-center">
-						<h2>Get <strong>In Touch</strong></h2>
-					</div>
-				</div>
-
-				<div class="col-md-7 mb-5 mb-md-0">
-					<form action="" class="site-form">
-						<h3 class="mb-5">Get In Touch</h3>
-						<div class="form-group">
-							<input type="text" class="form-control px-3 py-4" placeholder="Your Name">
-						</div>
-						<div class="form-group">
-							<input type="email" class="form-control px-3 py-4" placeholder="Your Email">
-						</div>
-						<div class="form-group">
-							<input type="email" class="form-control px-3 py-4" placeholder="Your Phone">
-						</div>
-						<div class="form-group mb-5">
-							<textarea class="form-control px-3 py-4"cols="30" rows="10" placeholder="Write a Message"></textarea>
-						</div>
-						<div class="form-group">
-							<input type="submit" class="btn btn-primary  px-4 py-3" value="Send Message">
-						</div>
-					</form>
-				</div>
-				<div class="col-md-5 pl-md-5">
-					<h3 class="mb-5">My Contact Details</h3>
-					<ul class="site-contact-details">
-						<li>
-							<span class="text-uppercase">Email</span>
-							jcamascah@gmail.com
-						</li>
-						<li>
-							<span class="text-uppercase">Phone</span>
-							+51 950 141 514
-						</li>
-						<li>
-							<span class="text-uppercase">Fax</span>
-							+30 976 1382 9922
-						</li>
-						<li>
-							<span class="text-uppercase">Address</span>
-							San Francisco, CA <br>
-							4th Floor8 Lower  <br>
-							San Francisco street, M1 50F
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</section>
-
-
-	<footer class="site-footer">
-		<div class="container">
-
-			<div class="row mb-5">
-				<p class="col-12 text-center">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true" ></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
-			</div>
-			
-			<div class="row mb-5">
-				<div class="col-md-12 text-center">
-					<p>
-						<a href="#" class="social-item"><span class="icon-facebook2"></span></a>
-						<a href="#" class="social-item"><span class="icon-twitter"></span></a>
-						<a href="#" class="social-item"><span class="icon-instagram2"></span></a>
-						<a href="#" class="social-item"><span class="icon-linkedin2"></span></a>
-						<!--<a href="#" class="social-item"><span class="icon-vimeo"></span></a> -->
-					</p>
-				</div>
-			</div>
-			
-		</div>
-	</footer>
-
-
-
-
-	<script src="js/vendor/jquery.min.js"></script>
-	<script src="js/vendor/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/vendor/popper.min.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-
-	<script src="js/vendor/jquery.easing.1.3.js"></script>
-
-	<script src="js/vendor/jquery.stellar.min.js"></script>
-	<script src="js/vendor/jquery.waypoints.min.js"></script>
-
-	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-	<script src="js/custom.js"></script>
-
-	<!-- Google Map -->
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    	<script src="js/google-map.js"></script> -->
-
-    </body>
-    </html>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">JC</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Work</a>
+    <a href="#teaching">Teaching</a>
+    <a href="#awards">Awards</a>
+    <a href="#publications">Research</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-tag">Machine Learning Engineer · 5+ years · Lima, Peru</div>
+  <h1 class="hero-name">Jhonatan<br><span>Camasca</span></h1>
+  <p class="hero-desc">
+    Building end-to-end AI systems with real business impact at Marvik.
+    Specialized in computer vision, NLP, and generative AI —
+    from research prototypes to production deployments at Apple, Interbank, and Mercado Libre.
+  </p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-primary">Get in touch</a>
+    <a href="#experience" class="btn btn-ghost">See my work</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">5<span>+</span></div><div class="stat-label">Years experience</div></div>
+    <div class="stat"><div class="stat-num">6<span>×</span></div><div class="stat-label">Hackathon awards</div></div>
+    <div class="stat"><div class="stat-num">2<span>×</span></div><div class="stat-label">IBM Champion</div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-header reveal"><span class="section-num">01</span><h2 class="section-title">About</h2></div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a <strong>Machine Learning Engineer</strong> with 5+ years of experience in Data Science, ML, and Data Engineering. I've contributed to end-to-end AI initiatives in e-commerce, marketing, and banking — including projects for US companies through consulting.</p>
+      <p>My work focuses on <strong>computer vision</strong>, <strong>NLP</strong>, and <strong>generative AI</strong> — designing and shipping systems that work under real-world constraints, not just on benchmarks. I use modern MLOps frameworks and deploy on AWS and GCP.</p>
+      <p>Beyond industry work, I teach machine learning and AI at <strong>UTEC</strong> and <strong>Cibertec</strong>, helping the next generation of engineers build solid foundations in data and AI.</p>
+    </div>
+    <div class="reveal">
+      <div class="skills-group">
+        <span class="skills-group-label">Languages & ML Frameworks</span>
+        <div class="skills-grid">
+          <span class="skill-tag">Python</span><span class="skill-tag">R</span><span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">Keras</span><span class="skill-tag">OpenCV</span><span class="skill-tag">scikit-learn</span><span class="skill-tag">Transformers</span><span class="skill-tag">PySpark</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <span class="skills-group-label">Generative AI</span>
+        <div class="skills-grid">
+          <span class="skill-tag">LangChain</span><span class="skill-tag">LlamaIndex</span><span class="skill-tag">HuggingFace</span><span class="skill-tag">LLMs</span><span class="skill-tag">RAG</span><span class="skill-tag">ONNX</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <span class="skills-group-label">Cloud & Infrastructure</span>
+        <div class="skills-grid">
+          <span class="skill-tag">AWS</span><span class="skill-tag">GCP</span><span class="skill-tag">SageMaker</span><span class="skill-tag">Docker</span><span class="skill-tag">FastAPI</span><span class="skill-tag">CI/CD</span><span class="skill-tag">Git</span><span class="skill-tag">Linux</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <span class="skills-group-label">Data & Big Data</span>
+        <div class="skills-grid">
+          <span class="skill-tag">PostgreSQL</span><span class="skill-tag">MySQL</span><span class="skill-tag">Hadoop</span><span class="skill-tag">Apache Spark</span><span class="skill-tag">AWS Athena</span><span class="skill-tag">Power BI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-header reveal"><span class="section-num">02</span><h2 class="section-title">Experience</h2></div>
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <div>
+          <div class="exp-company">Marvik</div>
+          <div class="exp-role">Machine Learning Engineer</div>
+          <div class="exp-period">Nov 2023 – Present · Lima, Peru</div>
+        </div>
+        <div class="exp-toggle">+</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-project">
+          <div class="exp-project-name">Interbank — AML Detection Pipeline</div>
+          <ul class="exp-bullets">
+            <li>Built an automated analytical pipeline integrating LLM-generated insights with SageMaker Jobs to extract actionable findings from customer transactional data at scale.</li>
+            <li>Implemented Isolation Forest models to detect statistically anomalous behavioral patterns, flagging high-risk activity for compliance review.</li>
+            <li>Applied SHAP-based explainability to translate model outputs into interpretable, analyst-ready narratives for risk communication across stakeholder teams.</li>
+            <li>Configured distributed pipeline execution on AWS SageMaker for scalable and reliable processing of large data volumes.</li>
+          </ul>
+        </div>
+        <div class="exp-project">
+          <div class="exp-project-name">Interbank — Best Channel Pilot: Customer Segmentation</div>
+          <ul class="exp-bullets">
+            <li>Designed a customer data pipeline in AWS Athena consolidating behavioral and transactional signals across contact channels (in-app, push, SMS, email).</li>
+            <li>Trained ML classification models to predict the most effective contact channel per customer, generating ranked probabilities.</li>
+            <li>Applied K-Means, K-Means + PCA, and K-Modes segmentation on demographic and behavioral data to identify differentiated customer profiles.</li>
+          </ul>
+        </div>
+        <div class="exp-project">
+          <div class="exp-project-name">Apple — RAG Pipelines with Specialized Agents</div>
+          <ul class="exp-bullets">
+            <li>Built specialized agents for query rewriting, decomposition, retrieval, and answer verification over PDF documents. Implemented Chain of Verification with toxicity and hallucination guardians.</li>
+            <li>Developed a multi-agent RAG pipeline for CSV data with parallel workers, composite validated responses, and a proprietary QA evaluation framework.</li>
+            <li>Orchestrated a multi-source RAG pipeline (PDF + CSV) with auto-reflection, adaptive evaluation, and a custom MapReduce-style LLM algorithm with Chain of Dense Prompting.</li>
+            <li>Built an automatic report generation pipeline transforming model outputs into structured PowerPoint slides and executive reports with custom inference endpoints.</li>
+            <li>Trained and deployed 12 LSTM models for monthly product trend forecasting with anomaly detection and automated inference scheduling.</li>
+          </ul>
+        </div>
+        <div class="exp-project">
+          <div class="exp-project-name">Mercado Libre — Content Generation & Digital Avatars</div>
+          <ul class="exp-bullets">
+            <li>Developed an automated product reel generation pipeline producing scripts and cinematography from structured data and images, with auto-translation to Spanish and Portuguese.</li>
+            <li>Built a Speech-to-Text PoC using AssemblyAI with a Gradio-based interface for accurate transcription.</li>
+            <li>Researched lip-sync models (Diff2Lip, Wav2Lip, MuseTalk) and avatar generation tools (NVIDIA Audio2Face, Hedra) for digital presenter use cases.</li>
+          </ul>
+        </div>
+        <div class="exp-project">
+          <div class="exp-project-name">Bobcat — NLP, STT & Edge AI Assistant</div>
+          <ul class="exp-bullets">
+            <li>Implemented text classification models using DistilBERT + ONNX for optimized edge inference.</li>
+            <li>Deployed a production Speech-to-Text pipeline integrated into the company's virtual assistant product.</li>
+            <li>Integrated lightweight LLMs and optimized the RAG pipeline for deployment on Jetson Nano Orin edge hardware.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <div>
+          <div class="exp-company">Deloitte</div>
+          <div class="exp-role">Data & AI Consultant</div>
+          <div class="exp-period">Dec 2021 – Nov 2023 · San Isidro, Lima</div>
+        </div>
+        <div class="exp-toggle">+</div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Built forecasting pipelines to predict business demand for e-commerce clients.</li>
+          <li>Monitored ML model performance and identified improvement areas, increasing operational efficiency.</li>
+          <li>Debugged PySpark code ensuring smooth functioning of data processing pipelines.</li>
+          <li>Designed KPI dashboards and collaborated on metric definition and refinement across business areas.</li>
+          <li>Analyzed user behavior data including social media funnels, cohort tables, and transactional data.</li>
+          <li>Extracted data from social platforms (LinkedIn, Facebook, Twitter, Google Maps) using APIs and BeautifulSoup.</li>
+          <li>Built a sentiment analysis dashboard using BERT and NER with Streamlit UI and Docker deployment.</li>
+          <li>Developed a GPT-based content generation chatbot with PDF support via LangChain, deployed with Docker.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <div>
+          <div class="exp-company">Indra Company</div>
+          <div class="exp-role">Big Data Engineer</div>
+          <div class="exp-period">Oct 2020 – Dec 2021 · San Isidro, Lima</div>
+        </div>
+        <div class="exp-toggle">+</div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Migrated transactional tables and developed end-to-end solutions for efficient data transfer between databases.</li>
+          <li>Automated data engineering processes using custom scripts and workflows to reduce error risk and increase throughput.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <div>
+          <div class="exp-company">Graña y Montero</div>
+          <div class="exp-role">Data Analyst</div>
+          <div class="exp-period">Jun 2020 – Oct 2020 · San Isidro, Lima</div>
+        </div>
+        <div class="exp-toggle">+</div>
+      </div>
+      <div class="exp-body">
+        <ul class="exp-bullets">
+          <li>Created dashboards and performed due diligence data analysis using Power BI.</li>
+          <li>Analyzed risk-related information and performed data validation for business reporting.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="teaching">
+  <div class="section-header reveal"><span class="section-num">03</span><h2 class="section-title">Teaching</h2></div>
+  <div class="teaching-grid">
+    <div class="teaching-card reveal">
+      <div class="teaching-org">UTEC — Universidad de Ingeniería y Tecnología</div>
+      <div class="teaching-role">AI/ML Mentor</div>
+      <div class="teaching-period">2025 – Present</div>
+      <div class="teaching-courses">
+        <span class="course-tag">AI Projects</span><span class="course-tag">Machine Learning</span><span class="course-tag">Data Science</span>
+      </div>
+    </div>
+    <div class="teaching-card reveal">
+      <div class="teaching-org">Cibertec</div>
+      <div class="teaching-role">Instructor — Data Science Specialization</div>
+      <div class="teaching-period">Aug 2023 – Present</div>
+      <div class="teaching-courses">
+        <span class="course-tag">Python for DS</span><span class="course-tag">Python for ML</span><span class="course-tag">AI Developer</span><span class="course-tag">FastAPI</span><span class="course-tag">Web Scraping</span><span class="course-tag">Data Analytics</span>
+      </div>
+    </div>
+    <div class="teaching-card reveal">
+      <div class="teaching-org">Data Science Research Peru</div>
+      <div class="teaching-role">Instructor — Data Engineering</div>
+      <div class="teaching-period">May 2022 – Sep 2023</div>
+      <div class="teaching-courses">
+        <span class="course-tag">Data Pipelines</span><span class="course-tag">SQL</span><span class="course-tag">Apache Spark</span><span class="course-tag">Big Data</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="awards">
+  <div class="section-header reveal"><span class="section-num">04</span><h2 class="section-title">Awards</h2></div>
+  <div class="awards-list">
+    <div class="award-row reveal">
+      <div class="award-place">1st</div>
+      <div><div class="award-name">BBVA Hackathon 2020</div><div class="award-meta">BBVA · International winner (Mexico, Colombia, Peru, Spain) · Social Listening Challenge</div></div>
+      <span class="award-badge badge-gold">Gold</span>
+    </div>
+    <div class="award-row reveal">
+      <div class="award-place">2nd</div>
+      <div><div class="award-name">Hackathon Creamos Juntos</div><div class="award-meta">Banco BCP · Vaccine misinformation solution using a Virtual Assistant</div></div>
+      <span class="award-badge badge-silver">Silver</span>
+    </div>
+    <div class="award-row reveal">
+      <div class="award-place">3rd</div>
+      <div><div class="award-name">Hackathon Belcorp 2.0</div><div class="award-meta">Belcorp · International · 3rd of 70 teams · NLP project</div></div>
+      <span class="award-badge badge-bronze">Bronze</span>
+    </div>
+    <div class="award-row reveal">
+      <div class="award-place">2nd</div>
+      <div><div class="award-name">NASA Space Apps Lima Hackathon</div><div class="award-meta">NASA · 2nd of 180 teams · Plastic Marine Debris Challenge</div></div>
+      <span class="award-badge badge-silver">Silver</span>
+    </div>
+    <div class="award-row reveal">
+      <div class="award-place">Hon.</div>
+      <div><div class="award-name">NASA Space Apps — Honorable Mention</div><div class="award-meta">NASA · Near-finalist recognition at global level</div></div>
+      <span class="award-badge badge-special">Special</span>
+    </div>
+    <div class="award-row reveal">
+      <div class="award-place" style="font-size:0.8rem;">IBM</div>
+      <div><div class="award-name">IBM Champion 2022 & 2023</div><div class="award-meta">IBM · AI workshops using Deep Learning and IBM Cloud Services</div></div>
+      <span class="award-badge badge-special">Champion</span>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="section-header reveal"><span class="section-num">05</span><h2 class="section-title">Research</h2></div>
+  <div class="pub-grid">
+    <div class="pub-card reveal">
+      <span class="pub-tag">Deep Learning · Medical Imaging</span>
+      <div class="pub-title">Detection of Pathologies in X-Rays Based on a Deep Learning Framework</div>
+      <div class="pub-venue">CIIS Ulima — Congreso Internacional de Ingeniería de Sistemas · Nov 2020</div>
+      <a href="https://repositorio.ulima.edu.pe/handle/20.500.12724/13922" class="pub-link" target="_blank">Read paper →</a>
+    </div>
+    <div class="pub-card reveal">
+      <span class="pub-tag">Computer Vision · YOLO · ALPR</span>
+      <div class="pub-title">Multi-class Vehicle Detection and Automatic License Plate Recognition based on YOLO in Latin American Context</div>
+      <div class="pub-venue">SIMBig 2020 — Information Management and Big Data, Springer · Oct 2020</div>
+      <a href="https://link.springer.com/chapter/10.1007/978-3-030-76228-5_19" class="pub-link" target="_blank">Read paper →</a>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-header reveal"><span class="section-num">06</span><h2 class="section-title">Education</h2></div>
+  <div class="edu-timeline">
+    <div class="edu-item reveal">
+      <div class="edu-degree">MicroMaster in Statistics & Data Science</div>
+      <div class="edu-inst">Massachusetts Institute of Technology (MIT)</div>
+      <div class="edu-period">2021 – Present</div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-degree">Postgraduate Diploma in Artificial Intelligence</div>
+      <div class="edu-inst">Pontificia Universidad Católica de Chile</div>
+      <div class="edu-period">2023 – 2025 · Remote</div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-degree">Postgraduate Diploma in Computer Vision</div>
+      <div class="edu-inst">Universidad Católica San Pablo</div>
+      <div class="edu-period">2022 – 2023 · Lima, Peru</div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-degree">B.S. Systems & Information Technology Engineering</div>
+      <div class="edu-inst">Universidad ESAN</div>
+      <div class="edu-period">2015 – 2020 · Lima, Peru</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="contact-wrap">
+    <div class="reveal">
+      <div class="contact-heading">Let's<br><span>work</span><br>together.</div>
+      <p style="color:var(--muted); margin-top:1.5rem; font-size:13px; max-width:300px; line-height:1.8;">Open to collaborations, research projects, and consulting in ML, AI, and generative AI.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:jccamascah@gmail.com" class="contact-item">
+        <span class="contact-icon">✉</span>
+        <div><span class="contact-label">Email</span><span class="contact-value">jccamascah@gmail.com</span></div>
+      </a>
+      <a href="tel:+51950141514" class="contact-item">
+        <span class="contact-icon">☏</span>
+        <div><span class="contact-label">Phone</span><span class="contact-value">+51 950 141 514</span></div>
+      </a>
+      <a href="https://www.linkedin.com/in/jhonatancamasca/" target="_blank" class="contact-item">
+        <span class="contact-icon">in</span>
+        <div><span class="contact-label">LinkedIn</span><span class="contact-value">jhonatancamasca</span></div>
+      </a>
+      <a href="https://github.com/jhonatancamasca" target="_blank" class="contact-item">
+        <span class="contact-icon">{ }</span>
+        <div><span class="contact-label">GitHub</span><span class="contact-value">jhonatancamasca</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Jhonatan Camasca</p>
+  <p style="color:rgba(107,110,119,0.5);">Built with HTML · Hosted on GitHub Pages</p>
+</footer>
+
+<script>
+  function toggleExp(header) {
+    header.parentElement.classList.toggle('open');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 60);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
