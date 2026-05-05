@@ -1,493 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jhonatan Camasca — Machine Learning Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0b0c0e; --bg2: #111316; --bg3: #16181d;
-      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
-      --text: #e8e6e0; --muted: #6b6e77;
-      --accent: #c8f050; --accent2: #4af0b0; --accent3: #f0a050;
-      --font-display: 'Syne', sans-serif; --font-mono: 'DM Mono', monospace;
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font-mono); font-size: 14px; line-height: 1.7; overflow-x: hidden; }
-    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.4; }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; border-bottom: 1px solid var(--border); background: rgba(11,12,14,0.88); backdrop-filter: blur(14px); }
-    .nav-logo { font-family: var(--font-display); font-size: 15px; font-weight: 700; letter-spacing: 0.05em; color: var(--text); text-decoration: none; }
-    .nav-links { display: flex; gap: 1.75rem; }
-    .nav-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
-
-    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 8rem 3rem 4rem; position: relative; border-bottom: 1px solid var(--border); }
-    .hero-tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s; }
-    .hero-name { font-family: var(--font-display); font-size: clamp(3.5rem, 9vw, 8rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; color: var(--text); opacity: 0; animation: fadeUp 0.7s ease forwards 0.35s; }
-    .hero-name span { color: var(--accent); }
-    .hero-desc { max-width: 560px; margin-top: 2rem; font-size: 14px; color: var(--muted); line-height: 1.85; opacity: 0; animation: fadeUp 0.7s ease forwards 0.5s; }
-    .hero-cta { display: flex; gap: 1rem; margin-top: 2.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.65s; }
-    .btn { display: inline-block; padding: 0.6rem 1.4rem; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
-    .btn-primary { background: var(--accent); color: #0b0c0e; font-weight: 500; }
-    .btn-primary:hover { background: #d8ff60; transform: translateY(-1px); }
-    .btn-ghost { border: 1px solid var(--border2); color: var(--muted); }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-    .hero-stats { position: absolute; right: 3rem; bottom: 4rem; display: flex; flex-direction: column; gap: 1.5rem; opacity: 0; animation: fadeLeft 0.7s ease forwards 0.8s; }
-    .stat { text-align: right; }
-    .stat-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--text); line-height: 1; }
-    .stat-num span { color: var(--accent); }
-    .stat-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
-
-    section { padding: 5rem 3rem; border-bottom: 1px solid var(--border); }
-    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
-    .section-num { font-size: 11px; color: var(--accent); letter-spacing: 0.1em; }
-    .section-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--text); }
-
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-    .about-text p { color: var(--muted); line-height: 1.9; margin-bottom: 1rem; font-size: 14px; }
-    .about-text p strong { color: var(--text); font-weight: 500; }
-    .skills-group { margin-bottom: 1.5rem; }
-    .skills-group-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.6rem; display: block; }
-    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill-tag { font-size: 11px; letter-spacing: 0.06em; padding: 4px 10px; border: 1px solid var(--border2); border-radius: 2px; color: var(--muted); transition: all 0.2s; }
-    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
-
-    .exp-list { display: flex; flex-direction: column; gap: 2px; }
-    .exp-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: border-color 0.2s; }
-    .exp-item:hover { border-color: var(--border2); }
-    .exp-header { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 1rem; padding: 1.25rem 1.5rem; cursor: pointer; }
-    .exp-company { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
-    .exp-role { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.3; }
-    .exp-period { font-size: 11px; color: var(--muted); margin-top: 4px; }
-    .exp-toggle { font-size: 18px; color: var(--muted); line-height: 1; transition: transform 0.3s; user-select: none; padding-top: 2px; }
-    .exp-item.open .exp-toggle { transform: rotate(45deg); color: var(--accent); }
-    .exp-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; padding: 0 1.5rem; }
-    .exp-item.open .exp-body { max-height: 1400px; padding: 0 1.5rem 1.5rem; }
-    .exp-project { margin-bottom: 1.25rem; padding-left: 1rem; border-left: 2px solid var(--border2); }
-    .exp-project-name { font-size: 12px; font-weight: 500; color: var(--accent2); letter-spacing: 0.04em; margin-bottom: 6px; }
-    .exp-bullets { list-style: none; padding: 0; }
-    .exp-bullets li { font-size: 13px; color: var(--muted); padding: 3px 0 3px 1rem; position: relative; line-height: 1.65; }
-    .exp-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--border2); }
-
-    .teaching-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-    .teaching-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1.5rem; transition: border-color 0.2s; }
-    .teaching-card:hover { border-color: var(--border2); }
-    .teaching-org { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent3); margin-bottom: 6px; }
-    .teaching-role { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-    .teaching-period { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
-    .teaching-courses { display: flex; flex-wrap: wrap; gap: 6px; }
-    .course-tag { font-size: 10px; padding: 2px 8px; border-radius: 2px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); }
-
-    .awards-list { display: flex; flex-direction: column; }
-    .award-row { display: grid; grid-template-columns: 5rem 1fr auto; align-items: center; gap: 1.5rem; padding: 1.25rem 0.5rem; border-bottom: 1px solid var(--border); transition: background 0.2s, padding-left 0.2s; border-radius: 4px; }
-    .award-row:first-child { border-top: 1px solid var(--border); }
-    .award-row:hover { background: var(--bg2); padding-left: 1rem; }
-    .award-place { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: var(--accent); }
-    .award-name { font-size: 14px; color: var(--text); font-weight: 500; }
-    .award-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .award-badge { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
-    .badge-gold { background: rgba(200,240,80,0.1); color: var(--accent); border: 1px solid rgba(200,240,80,0.25); }
-    .badge-silver { background: rgba(74,240,176,0.08); color: var(--accent2); border: 1px solid rgba(74,240,176,0.2); }
-    .badge-bronze { background: rgba(240,160,80,0.08); color: var(--accent3); border: 1px solid rgba(240,160,80,0.2); }
-    .badge-special { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border2); }
-
-    .pub-grid { display: flex; flex-direction: column; gap: 1.5rem; }
-    .pub-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; transition: border-color 0.2s; }
-    .pub-card:hover { border-color: var(--border2); }
-    .pub-tag { display: inline-block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); border: 1px solid rgba(74,240,176,0.25); padding: 2px 8px; border-radius: 2px; margin-bottom: 0.75rem; }
-    .pub-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 0.5rem; }
-    .pub-venue { font-size: 12px; color: var(--muted); margin-bottom: 1rem; }
-    .pub-link { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
-    .pub-link:hover { text-decoration: underline; }
-
-    .edu-timeline { position: relative; padding-left: 1.5rem; }
-    .edu-timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
-    .edu-item { position: relative; padding: 0 0 2.5rem 2rem; }
-    .edu-item::before { content: ''; position: absolute; left: -4px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(200,240,80,0.4); }
-    .edu-degree { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-    .edu-inst { font-size: 13px; color: var(--muted); }
-    .edu-period { font-size: 11px; color: rgba(107,110,119,0.7); margin-top: 2px; }
-
-    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .contact-heading { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; line-height: 1.1; color: var(--text); }
-    .contact-heading span { color: var(--accent); }
-    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
-    .contact-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s; }
-    .contact-item:hover { border-color: var(--accent); transform: translateX(4px); }
-    .contact-icon { font-size: 15px; min-width: 24px; text-align: center; }
-    .contact-label { font-size: 11px; color: var(--muted); display: block; letter-spacing: 0.06em; }
-    .contact-value { font-size: 14px; color: var(--text); }
-
-    footer { padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
-    footer p { font-size: 12px; color: var(--muted); }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeLeft { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 0.75rem; }
-      .nav-links a { font-size: 10px; }
-      #hero { padding: 7rem 1.5rem 8rem; }
-      .hero-stats { position: static; margin-top: 2.5rem; flex-direction: row; gap: 2rem; opacity: 1; animation: none; }
-      .stat { text-align: left; }
-      section { padding: 3.5rem 1.5rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .award-row { grid-template-columns: 4rem 1fr; }
-      .award-badge { display: none; }
-      .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jhonatan Camasca — ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<nav>
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
   <a href="#hero" class="nav-logo">JC</a>
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#experience">Work</a>
-    <a href="#teaching">Teaching</a>
+    <a href="#skills">Skills</a>
     <a href="#awards">Awards</a>
-    <a href="#publications">Research</a>
+    <a href="#research">Research</a>
     <a href="#contact">Contact</a>
   </div>
+  <a href="mailto:jccamascah@gmail.com" class="nav-cta">Hire me</a>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-tag">Machine Learning Engineer · 5+ years · Lima, Peru</div>
-  <h1 class="hero-name">Jhonatan<br><span>Camasca</span></h1>
-  <p class="hero-desc">
-    Building end-to-end AI systems with real business impact at Marvik.
-    Specialized in computer vision, NLP, and generative AI —
-    from research prototypes to production deployments at Apple, Interbank, and Mercado Libre.
-  </p>
-  <div class="hero-cta">
-    <a href="#contact" class="btn btn-primary">Get in touch</a>
-    <a href="#experience" class="btn btn-ghost">See my work</a>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Machine Learning Engineer · Lima, Peru</p>
+    <h1 class="hero-name">
+      Jhonatan<br><em>Camasca</em>
+    </h1>
+    <div class="hero-type-row">
+      <span class="hero-type-prefix">I build </span>
+      <span id="typewriter"></span><span class="type-cursor">|</span>
+    </div>
+    <p class="hero-desc">5+ years shipping end-to-end AI systems across banking, tech, e-commerce and manufacturing. From research to production.</p>
+    <div class="hero-btns">
+      <a href="#experience" class="btn-primary">See my work</a>
+      <a href="#contact" class="btn-secondary">Get in touch</a>
+    </div>
   </div>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num">5<span>+</span></div><div class="stat-label">Years experience</div></div>
-    <div class="stat"><div class="stat-num">6<span>×</span></div><div class="stat-label">Hackathon awards</div></div>
-    <div class="stat"><div class="stat-num">2<span>×</span></div><div class="stat-label">IBM Champion</div></div>
+    <div class="hstat"><span class="hstat-n">5<sup>+</sup></span><span class="hstat-l">Years</span></div>
+    <div class="hstat"><span class="hstat-n">6</span><span class="hstat-l">Awards</span></div>
+    <div class="hstat"><span class="hstat-n">2×</span><span class="hstat-l">IBM Champion</span></div>
+    <div class="hstat"><span class="hstat-n">2</span><span class="hstat-l">Papers</span></div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"><div class="scroll-ball"></div></div>
   </div>
 </section>
 
-<section id="about">
-  <div class="section-header reveal"><span class="section-num">01</span><h2 class="section-title">About</h2></div>
-  <div class="about-grid">
-    <div class="about-text reveal">
-      <p>I'm a <strong>Machine Learning Engineer</strong> with 5+ years of experience in Data Science, ML, and Data Engineering. I've contributed to end-to-end AI initiatives in e-commerce, marketing, and banking — including projects for US companies through consulting.</p>
-      <p>My work focuses on <strong>computer vision</strong>, <strong>NLP</strong>, and <strong>generative AI</strong> — designing and shipping systems that work under real-world constraints, not just on benchmarks. I use modern MLOps frameworks and deploy on AWS and GCP.</p>
-      <p>Beyond industry work, I teach machine learning and AI at <strong>UTEC</strong> and <strong>Cibertec</strong>, helping the next generation of engineers build solid foundations in data and AI.</p>
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">About <em>me</em></h2>
     </div>
-    <div class="reveal">
-      <div class="skills-group">
-        <span class="skills-group-label">Languages & ML Frameworks</span>
-        <div class="skills-grid">
-          <span class="skill-tag">Python</span><span class="skill-tag">R</span><span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">Keras</span><span class="skill-tag">OpenCV</span><span class="skill-tag">scikit-learn</span><span class="skill-tag">Transformers</span><span class="skill-tag">PySpark</span>
-        </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="about-lead">ML Engineer with 5+ years building AI systems that deliver real business impact.</p>
+        <p>I've worked across banking, e-commerce, manufacturing, and tech — including projects for US companies through consulting at Marvik and Deloitte. My focus is <strong>computer vision</strong>, <strong>NLP</strong>, and <strong>generative AI</strong>.</p>
+        <p>I design systems that work under real-world constraints: latency, cost, scale, and compliance. I deploy on AWS and GCP using modern MLOps practices.</p>
+        <p>Beyond industry work, I teach ML and AI at <strong>UTEC</strong> and <strong>Cibertec</strong> in Peru — helping the next generation of engineers build solid foundations in data and AI.</p>
       </div>
-      <div class="skills-group">
-        <span class="skills-group-label">Generative AI</span>
-        <div class="skills-grid">
-          <span class="skill-tag">LangChain</span><span class="skill-tag">LlamaIndex</span><span class="skill-tag">HuggingFace</span><span class="skill-tag">LLMs</span><span class="skill-tag">RAG</span><span class="skill-tag">ONNX</span>
+      <div class="about-skills reveal">
+        <div class="skill-group">
+          <span class="sg-label">ML & Deep Learning</span>
+          <div class="tag-row"><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">OpenCV</span><span class="tag">scikit-learn</span><span class="tag">Transformers</span><span class="tag">PySpark</span><span class="tag">ONNX</span></div>
         </div>
-      </div>
-      <div class="skills-group">
-        <span class="skills-group-label">Cloud & Infrastructure</span>
-        <div class="skills-grid">
-          <span class="skill-tag">AWS</span><span class="skill-tag">GCP</span><span class="skill-tag">SageMaker</span><span class="skill-tag">Docker</span><span class="skill-tag">FastAPI</span><span class="skill-tag">CI/CD</span><span class="skill-tag">Git</span><span class="skill-tag">Linux</span>
+        <div class="skill-group">
+          <span class="sg-label">Generative AI</span>
+          <div class="tag-row"><span class="tag">LangChain</span><span class="tag">LlamaIndex</span><span class="tag">HuggingFace</span><span class="tag">LLMs</span><span class="tag">RAG</span></div>
         </div>
-      </div>
-      <div class="skills-group">
-        <span class="skills-group-label">Data & Big Data</span>
-        <div class="skills-grid">
-          <span class="skill-tag">PostgreSQL</span><span class="skill-tag">MySQL</span><span class="skill-tag">Hadoop</span><span class="skill-tag">Apache Spark</span><span class="skill-tag">AWS Athena</span><span class="skill-tag">Power BI</span>
+        <div class="skill-group">
+          <span class="sg-label">Cloud & Infrastructure</span>
+          <div class="tag-row"><span class="tag">AWS</span><span class="tag">GCP</span><span class="tag">SageMaker</span><span class="tag">Docker</span><span class="tag">FastAPI</span><span class="tag">CI/CD</span></div>
+        </div>
+        <div class="skill-group">
+          <span class="sg-label">Data</span>
+          <div class="tag-row"><span class="tag">PostgreSQL</span><span class="tag">Apache Spark</span><span class="tag">Athena</span><span class="tag">Hadoop</span><span class="tag">Power BI</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="experience">
-  <div class="section-header reveal"><span class="section-num">02</span><h2 class="section-title">Experience</h2></div>
-  <div class="exp-list">
+<!-- EXPERIENCE -->
+<section class="section section-dark" id="experience">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Work <em>experience</em></h2>
+    </div>
+    <div class="exp-scroll-wrap reveal">
+      <div class="exp-track">
 
-    <div class="exp-item reveal">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div>
-          <div class="exp-company">Marvik</div>
-          <div class="exp-role">Machine Learning Engineer</div>
-          <div class="exp-period">Nov 2023 – Present · Lima, Peru</div>
-        </div>
-        <div class="exp-toggle">+</div>
-      </div>
-      <div class="exp-body">
-        <div class="exp-project">
-          <div class="exp-project-name">Interbank — AML Detection Pipeline</div>
-          <ul class="exp-bullets">
-            <li>Built an automated analytical pipeline integrating LLM-generated insights with SageMaker Jobs to extract actionable findings from customer transactional data at scale.</li>
-            <li>Implemented Isolation Forest models to detect statistically anomalous behavioral patterns, flagging high-risk activity for compliance review.</li>
-            <li>Applied SHAP-based explainability to translate model outputs into interpretable, analyst-ready narratives for risk communication across stakeholder teams.</li>
-            <li>Configured distributed pipeline execution on AWS SageMaker for scalable and reliable processing of large data volumes.</li>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-sector">Banking</span>
+            <span class="exp-period">2023 – Present</span>
+          </div>
+          <h3 class="exp-role">AML Detection Pipeline</h3>
+          <p class="exp-co">Marvik — Financial Sector</p>
+          <ul class="exp-list">
+            <li>Automated pipeline integrating LLM insights with SageMaker Jobs at scale</li>
+            <li>Isolation Forest models for anomalous behavioral pattern detection</li>
+            <li>SHAP explainability for analyst-ready compliance narratives</li>
           </ul>
+          <div class="exp-tags"><span class="etag">SageMaker</span><span class="etag">Isolation Forest</span><span class="etag">SHAP</span><span class="etag">LLMs</span></div>
         </div>
-        <div class="exp-project">
-          <div class="exp-project-name">Interbank — Best Channel Pilot: Customer Segmentation</div>
-          <ul class="exp-bullets">
-            <li>Designed a customer data pipeline in AWS Athena consolidating behavioral and transactional signals across contact channels (in-app, push, SMS, email).</li>
-            <li>Trained ML classification models to predict the most effective contact channel per customer, generating ranked probabilities.</li>
-            <li>Applied K-Means, K-Means + PCA, and K-Modes segmentation on demographic and behavioral data to identify differentiated customer profiles.</li>
+
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-sector">Banking</span>
+            <span class="exp-period">2023 – Present</span>
+          </div>
+          <h3 class="exp-role">Best Channel Prediction</h3>
+          <p class="exp-co">Marvik — Financial Sector</p>
+          <ul class="exp-list">
+            <li>AWS Athena pipeline consolidating behavioral & transactional signals</li>
+            <li>ML classification for most effective contact channel per customer</li>
+            <li>K-Means, K-Means+PCA, K-Modes customer segmentation</li>
           </ul>
+          <div class="exp-tags"><span class="etag">AWS Athena</span><span class="etag">K-Means</span><span class="etag">PCA</span></div>
         </div>
-        <div class="exp-project">
-          <div class="exp-project-name">Apple — RAG Pipelines with Specialized Agents</div>
-          <ul class="exp-bullets">
-            <li>Built specialized agents for query rewriting, decomposition, retrieval, and answer verification over PDF documents. Implemented Chain of Verification with toxicity and hallucination guardians.</li>
-            <li>Developed a multi-agent RAG pipeline for CSV data with parallel workers, composite validated responses, and a proprietary QA evaluation framework.</li>
-            <li>Orchestrated a multi-source RAG pipeline (PDF + CSV) with auto-reflection, adaptive evaluation, and a custom MapReduce-style LLM algorithm with Chain of Dense Prompting.</li>
-            <li>Built an automatic report generation pipeline transforming model outputs into structured PowerPoint slides and executive reports with custom inference endpoints.</li>
-            <li>Trained and deployed 12 LSTM models for monthly product trend forecasting with anomaly detection and automated inference scheduling.</li>
+
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-sector">Tech</span>
+            <span class="exp-period">2023 – Present</span>
+          </div>
+          <h3 class="exp-role">Multi-Agent RAG Pipelines</h3>
+          <p class="exp-co">Marvik — Tech Sector</p>
+          <ul class="exp-list">
+            <li>Specialized agents for query rewriting, retrieval & verification over PDFs</li>
+            <li>Multi-agent RAG for CSV with parallel workers & proprietary QA framework</li>
+            <li>12 LSTM models for monthly product trend forecasting</li>
           </ul>
+          <div class="exp-tags"><span class="etag">LangChain</span><span class="etag">LlamaIndex</span><span class="etag">LSTM</span><span class="etag">RAG</span></div>
         </div>
-        <div class="exp-project">
-          <div class="exp-project-name">Mercado Libre — Content Generation & Digital Avatars</div>
-          <ul class="exp-bullets">
-            <li>Developed an automated product reel generation pipeline producing scripts and cinematography from structured data and images, with auto-translation to Spanish and Portuguese.</li>
-            <li>Built a Speech-to-Text PoC using AssemblyAI with a Gradio-based interface for accurate transcription.</li>
-            <li>Researched lip-sync models (Diff2Lip, Wav2Lip, MuseTalk) and avatar generation tools (NVIDIA Audio2Face, Hedra) for digital presenter use cases.</li>
+
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-sector">E-commerce</span>
+            <span class="exp-period">2023 – Present</span>
+          </div>
+          <h3 class="exp-role">Content Generation & Avatars</h3>
+          <p class="exp-co">Marvik — E-commerce Sector</p>
+          <ul class="exp-list">
+            <li>Automated product reel pipeline with auto-translation (ES/PT)</li>
+            <li>Speech-to-Text PoC using AssemblyAI + Gradio interface</li>
+            <li>Research on Diff2Lip, Wav2Lip, MuseTalk for digital avatars</li>
           </ul>
+          <div class="exp-tags"><span class="etag">AssemblyAI</span><span class="etag">Gradio</span><span class="etag">Wav2Lip</span></div>
         </div>
-        <div class="exp-project">
-          <div class="exp-project-name">Bobcat — NLP, STT & Edge AI Assistant</div>
-          <ul class="exp-bullets">
-            <li>Implemented text classification models using DistilBERT + ONNX for optimized edge inference.</li>
-            <li>Deployed a production Speech-to-Text pipeline integrated into the company's virtual assistant product.</li>
-            <li>Integrated lightweight LLMs and optimized the RAG pipeline for deployment on Jetson Nano Orin edge hardware.</li>
+
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-sector">Manufacturing</span>
+            <span class="exp-period">2023 – Present</span>
+          </div>
+          <h3 class="exp-role">Edge AI Assistant</h3>
+          <p class="exp-co">Marvik — Industrial Sector</p>
+          <ul class="exp-list">
+            <li>DistilBERT + ONNX text classification optimized for edge</li>
+            <li>Production STT pipeline in virtual assistant product</li>
+            <li>Lightweight LLMs + RAG on Jetson Nano Orin hardware</li>
           </ul>
+          <div class="exp-tags"><span class="etag">DistilBERT</span><span class="etag">ONNX</span><span class="etag">Jetson Orin</span></div>
         </div>
-      </div>
-    </div>
 
-    <div class="exp-item reveal">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div>
-          <div class="exp-company">Deloitte</div>
-          <div class="exp-role">Data & AI Consultant</div>
-          <div class="exp-period">Dec 2021 – Nov 2023 · San Isidro, Lima</div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-sector">Consulting</span>
+            <span class="exp-period">Dec 2021 – Nov 2023</span>
+          </div>
+          <h3 class="exp-role">Data & AI Consultant</h3>
+          <p class="exp-co">Deloitte</p>
+          <ul class="exp-list">
+            <li>Forecasting pipelines for e-commerce demand prediction</li>
+            <li>BERT+NER sentiment dashboard with Streamlit & Docker</li>
+            <li>GPT chatbot with LangChain and PDF support</li>
+          </ul>
+          <div class="exp-tags"><span class="etag">BERT</span><span class="etag">LangChain</span><span class="etag">PySpark</span></div>
         </div>
-        <div class="exp-toggle">+</div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Built forecasting pipelines to predict business demand for e-commerce clients.</li>
-          <li>Monitored ML model performance and identified improvement areas, increasing operational efficiency.</li>
-          <li>Debugged PySpark code ensuring smooth functioning of data processing pipelines.</li>
-          <li>Designed KPI dashboards and collaborated on metric definition and refinement across business areas.</li>
-          <li>Analyzed user behavior data including social media funnels, cohort tables, and transactional data.</li>
-          <li>Extracted data from social platforms (LinkedIn, Facebook, Twitter, Google Maps) using APIs and BeautifulSoup.</li>
-          <li>Built a sentiment analysis dashboard using BERT and NER with Streamlit UI and Docker deployment.</li>
-          <li>Developed a GPT-based content generation chatbot with PDF support via LangChain, deployed with Docker.</li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="exp-item reveal">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div>
-          <div class="exp-company">Indra Company</div>
-          <div class="exp-role">Big Data Engineer</div>
-          <div class="exp-period">Oct 2020 – Dec 2021 · San Isidro, Lima</div>
+        <div class="exp-card">
+          <div class="exp-top">
+            <span class="exp-sector">Big Data</span>
+            <span class="exp-period">Oct 2020 – Dec 2021</span>
+          </div>
+          <h3 class="exp-role">Big Data Engineer</h3>
+          <p class="exp-co">Indra Company</p>
+          <ul class="exp-list">
+            <li>Transactional table migration and end-to-end data transfer solutions</li>
+            <li>Automated pipelines reducing error risk and increasing throughput</li>
+          </ul>
+          <div class="exp-tags"><span class="etag">Hadoop</span><span class="etag">HiveQL</span><span class="etag">PySpark</span></div>
         </div>
-        <div class="exp-toggle">+</div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Migrated transactional tables and developed end-to-end solutions for efficient data transfer between databases.</li>
-          <li>Automated data engineering processes using custom scripts and workflows to reduce error risk and increase throughput.</li>
-        </ul>
+
       </div>
     </div>
-
-    <div class="exp-item reveal">
-      <div class="exp-header" onclick="toggleExp(this)">
-        <div>
-          <div class="exp-company">Graña y Montero</div>
-          <div class="exp-role">Data Analyst</div>
-          <div class="exp-period">Jun 2020 – Oct 2020 · San Isidro, Lima</div>
-        </div>
-        <div class="exp-toggle">+</div>
-      </div>
-      <div class="exp-body">
-        <ul class="exp-bullets">
-          <li>Created dashboards and performed due diligence data analysis using Power BI.</li>
-          <li>Analyzed risk-related information and performed data validation for business reporting.</li>
-        </ul>
-      </div>
-    </div>
-
+    <p class="scroll-hint-text reveal">← drag or scroll to explore all roles</p>
   </div>
 </section>
 
-<section id="teaching">
-  <div class="section-header reveal"><span class="section-num">03</span><h2 class="section-title">Teaching</h2></div>
-  <div class="teaching-grid">
-    <div class="teaching-card reveal">
-      <div class="teaching-org">UTEC — Universidad de Ingeniería y Tecnología</div>
-      <div class="teaching-role">AI/ML Mentor</div>
-      <div class="teaching-period">2025 – Present</div>
-      <div class="teaching-courses">
-        <span class="course-tag">AI Projects</span><span class="course-tag">Machine Learning</span><span class="course-tag">Data Science</span>
-      </div>
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Tech <em>stack</em></h2>
     </div>
-    <div class="teaching-card reveal">
-      <div class="teaching-org">Cibertec</div>
-      <div class="teaching-role">Instructor — Data Science Specialization</div>
-      <div class="teaching-period">Aug 2023 – Present</div>
-      <div class="teaching-courses">
-        <span class="course-tag">Python for DS</span><span class="course-tag">Python for ML</span><span class="course-tag">AI Developer</span><span class="course-tag">FastAPI</span><span class="course-tag">Web Scraping</span><span class="course-tag">Data Analytics</span>
+    <div class="skills-icons-grid reveal">
+
+      <div class="sk-item" data-tip="Python · Expert">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"/>
+        <span>Python</span>
       </div>
-    </div>
-    <div class="teaching-card reveal">
-      <div class="teaching-org">Data Science Research Peru</div>
-      <div class="teaching-role">Instructor — Data Engineering</div>
-      <div class="teaching-period">May 2022 – Sep 2023</div>
-      <div class="teaching-courses">
-        <span class="course-tag">Data Pipelines</span><span class="course-tag">SQL</span><span class="course-tag">Apache Spark</span><span class="course-tag">Big Data</span>
+      <div class="sk-item" data-tip="PyTorch · Expert">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"/>
+        <span>PyTorch</span>
       </div>
+      <div class="sk-item" data-tip="TensorFlow · Advanced">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"/>
+        <span>TensorFlow</span>
+      </div>
+      <div class="sk-item" data-tip="OpenCV · Advanced">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" alt="OpenCV"/>
+        <span>OpenCV</span>
+      </div>
+      <div class="sk-item" data-tip="Docker · Advanced">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/>
+        <span>Docker</span>
+      </div>
+      <div class="sk-item" data-tip="AWS · Advanced">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS"/>
+        <span>AWS</span>
+      </div>
+      <div class="sk-item" data-tip="GCP · Intermediate">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP"/>
+        <span>GCP</span>
+      </div>
+      <div class="sk-item" data-tip="PostgreSQL · Advanced">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/>
+        <span>PostgreSQL</span>
+      </div>
+      <div class="sk-item" data-tip="FastAPI · Advanced">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI"/>
+        <span>FastAPI</span>
+      </div>
+      <div class="sk-item" data-tip="Git · Expert">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/>
+        <span>Git</span>
+      </div>
+      <div class="sk-item" data-tip="Linux · Advanced">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"/>
+        <span>Linux</span>
+      </div>
+      <div class="sk-item" data-tip="Pandas · Expert">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"/>
+        <span>Pandas</span>
+      </div>
+
     </div>
+    <!-- tooltip -->
+    <div id="sk-tooltip"></div>
   </div>
 </section>
 
-<section id="awards">
-  <div class="section-header reveal"><span class="section-num">04</span><h2 class="section-title">Awards</h2></div>
-  <div class="awards-list">
-    <div class="award-row reveal">
-      <div class="award-place">1st</div>
-      <div><div class="award-name">BBVA Hackathon 2020</div><div class="award-meta">BBVA · International winner (Mexico, Colombia, Peru, Spain) · Social Listening Challenge</div></div>
-      <span class="award-badge badge-gold">Gold</span>
+<!-- TEACHING -->
+<section class="section section-tinted" id="teaching">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Sharing <em>knowledge</em></h2>
     </div>
-    <div class="award-row reveal">
-      <div class="award-place">2nd</div>
-      <div><div class="award-name">Hackathon Creamos Juntos</div><div class="award-meta">Banco BCP · Vaccine misinformation solution using a Virtual Assistant</div></div>
-      <span class="award-badge badge-silver">Silver</span>
-    </div>
-    <div class="award-row reveal">
-      <div class="award-place">3rd</div>
-      <div><div class="award-name">Hackathon Belcorp 2.0</div><div class="award-meta">Belcorp · International · 3rd of 70 teams · NLP project</div></div>
-      <span class="award-badge badge-bronze">Bronze</span>
-    </div>
-    <div class="award-row reveal">
-      <div class="award-place">2nd</div>
-      <div><div class="award-name">NASA Space Apps Lima Hackathon</div><div class="award-meta">NASA · 2nd of 180 teams · Plastic Marine Debris Challenge</div></div>
-      <span class="award-badge badge-silver">Silver</span>
-    </div>
-    <div class="award-row reveal">
-      <div class="award-place">Hon.</div>
-      <div><div class="award-name">NASA Space Apps — Honorable Mention</div><div class="award-meta">NASA · Near-finalist recognition at global level</div></div>
-      <span class="award-badge badge-special">Special</span>
-    </div>
-    <div class="award-row reveal">
-      <div class="award-place" style="font-size:0.8rem;">IBM</div>
-      <div><div class="award-name">IBM Champion 2022 & 2023</div><div class="award-meta">IBM · AI workshops using Deep Learning and IBM Cloud Services</div></div>
-      <span class="award-badge badge-special">Champion</span>
-    </div>
-  </div>
-</section>
-
-<section id="publications">
-  <div class="section-header reveal"><span class="section-num">05</span><h2 class="section-title">Research</h2></div>
-  <div class="pub-grid">
-    <div class="pub-card reveal">
-      <span class="pub-tag">Deep Learning · Medical Imaging</span>
-      <div class="pub-title">Detection of Pathologies in X-Rays Based on a Deep Learning Framework</div>
-      <div class="pub-venue">CIIS Ulima — Congreso Internacional de Ingeniería de Sistemas · Nov 2020</div>
-      <a href="https://repositorio.ulima.edu.pe/handle/20.500.12724/13922" class="pub-link" target="_blank">Read paper →</a>
-    </div>
-    <div class="pub-card reveal">
-      <span class="pub-tag">Computer Vision · YOLO · ALPR</span>
-      <div class="pub-title">Multi-class Vehicle Detection and Automatic License Plate Recognition based on YOLO in Latin American Context</div>
-      <div class="pub-venue">SIMBig 2020 — Information Management and Big Data, Springer · Oct 2020</div>
-      <a href="https://link.springer.com/chapter/10.1007/978-3-030-76228-5_19" class="pub-link" target="_blank">Read paper →</a>
+    <div class="teach-grid">
+      <div class="teach-card reveal">
+        <div class="teach-org">UTEC</div>
+        <h3 class="teach-role">AI / ML Mentor</h3>
+        <p class="teach-period">2025 – Present</p>
+        <div class="tag-row"><span class="tag">AI Projects</span><span class="tag">Machine Learning</span><span class="tag">Data Science</span></div>
+      </div>
+      <div class="teach-card reveal">
+        <div class="teach-org">Cibertec</div>
+        <h3 class="teach-role">Instructor — Data Science Specialization</h3>
+        <p class="teach-period">Aug 2023 – Present · 6 courses</p>
+        <div class="tag-row"><span class="tag">Python for DS</span><span class="tag">Python for ML</span><span class="tag">AI Developer</span><span class="tag">FastAPI</span><span class="tag">Web Scraping</span></div>
+      </div>
+      <div class="teach-card reveal">
+        <div class="teach-org">Data Science Research Peru</div>
+        <h3 class="teach-role">Instructor — Data Engineering</h3>
+        <p class="teach-period">May 2022 – Sep 2023</p>
+        <div class="tag-row"><span class="tag">Data Pipelines</span><span class="tag">SQL</span><span class="tag">Apache Spark</span><span class="tag">Big Data</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="education">
-  <div class="section-header reveal"><span class="section-num">06</span><h2 class="section-title">Education</h2></div>
-  <div class="edu-timeline">
-    <div class="edu-item reveal">
-      <div class="edu-degree">MicroMaster in Statistics & Data Science</div>
-      <div class="edu-inst">Massachusetts Institute of Technology (MIT)</div>
-      <div class="edu-period">2021 – Present</div>
+<!-- AWARDS -->
+<section class="section" id="awards">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Awards & <em>recognition</em></h2>
     </div>
-    <div class="edu-item reveal">
-      <div class="edu-degree">Postgraduate Diploma in Artificial Intelligence</div>
-      <div class="edu-inst">Pontificia Universidad Católica de Chile</div>
-      <div class="edu-period">2023 – 2025 · Remote</div>
-    </div>
-    <div class="edu-item reveal">
-      <div class="edu-degree">Postgraduate Diploma in Computer Vision</div>
-      <div class="edu-inst">Universidad Católica San Pablo</div>
-      <div class="edu-period">2022 – 2023 · Lima, Peru</div>
-    </div>
-    <div class="edu-item reveal">
-      <div class="edu-degree">B.S. Systems & Information Technology Engineering</div>
-      <div class="edu-inst">Universidad ESAN</div>
-      <div class="edu-period">2015 – 2020 · Lima, Peru</div>
+    <div class="awards-list">
+      <div class="award-row reveal">
+        <span class="award-medal gold">🥇</span>
+        <div><div class="award-name">BBVA Hackathon 2020</div><div class="award-meta">1st place · International winner across Mexico, Colombia, Peru & Spain</div></div>
+        <span class="award-pill gold-pill">1st place</span>
+      </div>
+      <div class="award-row reveal">
+        <span class="award-medal silver">🥈</span>
+        <div><div class="award-name">Hackathon Creamos Juntos — Banco BCP</div><div class="award-meta">2nd place · Vaccine misinformation Virtual Assistant</div></div>
+        <span class="award-pill silver-pill">2nd place</span>
+      </div>
+      <div class="award-row reveal">
+        <span class="award-medal bronze">🥉</span>
+        <div><div class="award-name">Hackathon Belcorp 2.0</div><div class="award-meta">3rd place · 3rd of 70 international teams · NLP project</div></div>
+        <span class="award-pill bronze-pill">3rd place</span>
+      </div>
+      <div class="award-row reveal">
+        <span class="award-medal silver">🥈</span>
+        <div><div class="award-name">NASA Space Apps Lima Hackathon</div><div class="award-meta">2nd place · 2nd of 180 teams · Plastic Marine Debris Challenge</div></div>
+        <span class="award-pill silver-pill">2nd place</span>
+      </div>
+      <div class="award-row reveal">
+        <span class="award-medal">🏅</span>
+        <div><div class="award-name">NASA Space Apps — Honorable Mention</div><div class="award-meta">Near-finalist recognition at global level</div></div>
+        <span class="award-pill special-pill">Special</span>
+      </div>
+      <div class="award-row reveal">
+        <span class="award-medal">🏆</span>
+        <div><div class="award-name">IBM Champion 2022 & 2023</div><div class="award-meta">AI workshops using Deep Learning and IBM Cloud Services</div></div>
+        <span class="award-pill special-pill">Champion</span>
+      </div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="contact-wrap">
-    <div class="reveal">
-      <div class="contact-heading">Let's<br><span>work</span><br>together.</div>
-      <p style="color:var(--muted); margin-top:1.5rem; font-size:13px; max-width:300px; line-height:1.8;">Open to collaborations, research projects, and consulting in ML, AI, and generative AI.</p>
+<!-- RESEARCH -->
+<section class="section section-tinted" id="research">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">06</span>
+      <h2 class="sec-title">Published <em>research</em></h2>
     </div>
-    <div class="contact-links reveal">
-      <a href="mailto:jccamascah@gmail.com" class="contact-item">
-        <span class="contact-icon">✉</span>
-        <div><span class="contact-label">Email</span><span class="contact-value">jccamascah@gmail.com</span></div>
-      </a>
-      <a href="tel:+51950141514" class="contact-item">
-        <span class="contact-icon">☏</span>
-        <div><span class="contact-label">Phone</span><span class="contact-value">+51 950 141 514</span></div>
-      </a>
-      <a href="https://www.linkedin.com/in/jhonatancamasca/" target="_blank" class="contact-item">
-        <span class="contact-icon">in</span>
-        <div><span class="contact-label">LinkedIn</span><span class="contact-value">jhonatancamasca</span></div>
-      </a>
-      <a href="https://github.com/jhonatancamasca" target="_blank" class="contact-item">
-        <span class="contact-icon">{ }</span>
-        <div><span class="contact-label">GitHub</span><span class="contact-value">jhonatancamasca</span></div>
-      </a>
+    <div class="pub-grid">
+      <div class="pub-card reveal">
+        <div class="pub-tag">Deep Learning · Medical Imaging</div>
+        <h3 class="pub-title">Detection of Pathologies in X-Rays Based on a Deep Learning Framework</h3>
+        <p class="pub-venue">CIIS Ulima — Congreso Internacional de Ingeniería de Sistemas · Nov 2020</p>
+        <a href="https://repositorio.ulima.edu.pe/handle/20.500.12724/13922" target="_blank" class="pub-link">Read paper →</a>
+      </div>
+      <div class="pub-card reveal">
+        <div class="pub-tag">Computer Vision · YOLO · ALPR</div>
+        <h3 class="pub-title">Multi-class Vehicle Detection and Automatic License Plate Recognition based on YOLO in Latin American Context</h3>
+        <p class="pub-venue">SIMBig 2020 — Information Management and Big Data, Springer · Oct 2020</p>
+        <a href="https://link.springer.com/chapter/10.1007/978-3-030-76228-5_19" target="_blank" class="pub-link">Read paper →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">07</span>
+      <h2 class="sec-title">Academic <em>background</em></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <span class="edu-period">2021 – Present</span>
+        <h3 class="edu-deg">MicroMaster in Statistics & Data Science</h3>
+        <p class="edu-inst">Massachusetts Institute of Technology (MIT)</p>
+      </div>
+      <div class="edu-card reveal">
+        <span class="edu-period">2023 – 2025 · Remote</span>
+        <h3 class="edu-deg">Postgraduate Diploma in Artificial Intelligence</h3>
+        <p class="edu-inst">Pontificia Universidad Católica de Chile</p>
+      </div>
+      <div class="edu-card reveal">
+        <span class="edu-period">2022 – 2023 · Lima</span>
+        <h3 class="edu-deg">Postgraduate Diploma in Computer Vision</h3>
+        <p class="edu-inst">Universidad Católica San Pablo</p>
+      </div>
+      <div class="edu-card reveal">
+        <span class="edu-period">2015 – 2020 · Lima</span>
+        <h3 class="edu-deg">B.S. Systems & Information Technology Engineering</h3>
+        <p class="edu-inst">Universidad ESAN</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section section-dark" id="contact">
+  <div class="container">
+    <div class="contact-wrap">
+      <div class="reveal">
+        <h2 class="contact-head">Let's build<br>something <em>great</em></h2>
+        <p class="contact-sub">Open to collaborations, consulting, and interesting problems in ML, AI and generative AI.</p>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:jccamascah@gmail.com" class="ci"><span class="ci-ico">✉</span><div><span class="ci-l">Email</span><span class="ci-v">jccamascah@gmail.com</span></div></a>
+        <a href="tel:+51950141514" class="ci"><span class="ci-ico">☏</span><div><span class="ci-l">Phone</span><span class="ci-v">+51 950 141 514</span></div></a>
+        <a href="https://www.linkedin.com/in/jhonatancamasca/" target="_blank" class="ci">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" class="ci-ico-img" alt="LinkedIn"/>
+          <div><span class="ci-l">LinkedIn</span><span class="ci-v">jhonatancamasca</span></div>
+        </a>
+        <a href="https://github.com/jhonatancamasca" target="_blank" class="ci">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="ci-ico-img ci-github" alt="GitHub"/>
+          <div><span class="ci-l">GitHub</span><span class="ci-v">jhonatancamasca</span></div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>© 2025 Jhonatan Camasca</p>
-  <p style="color:rgba(107,110,119,0.5);">Built with HTML · Hosted on GitHub Pages</p>
+  <div class="container footer-inner">
+    <span>© 2025 Jhonatan Camasca</span>
+    <span>Built with HTML · GitHub Pages</span>
+  </div>
 </footer>
 
-<script>
-  function toggleExp(header) {
-    header.parentElement.classList.toggle('open');
-  }
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 60);
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+<script src="script.js"></script>
 </body>
 </html>
